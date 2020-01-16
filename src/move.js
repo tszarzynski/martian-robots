@@ -10,6 +10,7 @@ const moves = [
   [-1, 0]
 ];
 
+// Dictionary of all possible instructions
 const movesDict = {
   R: robot => rotateRobot(robot, 1),
   L: robot => rotateRobot(robot, -1),
@@ -64,18 +65,49 @@ const checkIfInside = (grid, position) => {
   return inRange(position[0], 0, grid[0]) && inRange(position[1], 0, grid[1]);
 };
 
+// scents
+const scents = [];
+const checkIfDeadlyMove = (robot, instruction) => {
+  return scents.some(
+    scent =>
+      scent.position[0] == robot.position[0] &&
+      scent.position[1] == robot.position[1] &&
+      scent.direction == robot.direction &&
+      scent.instruction == instruction
+  );
+};
+
+/**
+ * Perform all the instruction for all the robots
+ * @param {*} grid
+ * @param {Array} robots
+ */
 function move(grid, robots) {
   return robots.map(robot => {
     return robot.instructions.reduce((robot, instruction) => {
+      // if robot alreay lost ignore remaining instructions
       if (robot.status == "LOST") return robot;
+
+      // if scent detected ignore instruction
+      if (checkIfDeadlyMove(robot, instruction)) {
+        return robot;
+      }
 
       let updatedRobot = updateRobot(robot, instruction);
 
+      // check if robot is inside grid
       if (!checkIfInside(grid, updatedRobot.position)) {
         // if robot died cancel last move
         updatedRobot = robot;
         // mark robot as LOST
         updatedRobot.status = "LOST";
+
+        // mark position as scent
+        scents.push({
+          position: robot.position,
+          direction: robot.direction,
+          instruction
+        });
       }
 
       return updatedRobot;
