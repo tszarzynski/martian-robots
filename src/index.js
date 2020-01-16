@@ -7,7 +7,12 @@ const { move } = require("./move");
     const output = move(grid, robots);
 
     output.forEach(robot =>
-      console.log(robot.position[0], robot.position[1], robot.direction)
+      console.log(
+        robot.position[0],
+        robot.position[1],
+        robot.direction,
+        robot.status
+      )
     );
   } catch (e) {
     console.log(e);

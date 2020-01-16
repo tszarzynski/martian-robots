@@ -59,7 +59,7 @@ function parseGridLine(line) {
 
 /**
  * Process input data
- * @param {Array} arrData Input data
+ * @param {Array} arrData
  */
 function processInputData(arrData) {
   return arrData.reduce(
@@ -84,7 +84,10 @@ function processInputData(arrData) {
           // reading position line and adding new robot object
           robots = [
             ...robots,
-            ({ direction, position } = parsePositionLine(currentLine))
+            {
+              ...({ direction, position } = parsePositionLine(currentLine)),
+              status: ""
+            }
           ];
         }
 

@@ -31,6 +31,11 @@ function rotateRobot(robot, rotationDirection) {
   };
 }
 
+/**
+ * Move robot
+ * @param {*} robot
+ * @param {Number} numOfSteps
+ */
 function moveRobot(robot, numOfSteps) {
   const nextMoveIndex = directions.indexOf(robot.direction);
   const nextMove = moves[nextMoveIndex]; //multipliers
@@ -44,14 +49,34 @@ function moveRobot(robot, numOfSteps) {
   };
 }
 
+/**
+ * Apply single instruction to robot
+ * @param {*} robot
+ * @param {String} instruction
+ */
 function updateRobot(robot, instruction) {
   return movesDict[instruction](robot);
 }
 
+// check if number is in range
+const inRange = (x, start, end) => (x - start) * (x - end) <= 0;
+const checkIfInside = (grid, position) => {
+  return inRange(position[0], 0, grid[0]) && inRange(position[1], 0, grid[1]);
+};
+
 function move(grid, robots) {
   return robots.map(robot => {
     return robot.instructions.reduce((robot, instruction) => {
+      if (robot.status == "LOST") return robot;
+
       let updatedRobot = updateRobot(robot, instruction);
+
+      if (!checkIfInside(grid, updatedRobot.position)) {
+        // if robot died cancel last move
+        updatedRobot = robot;
+        // mark robot as LOST
+        updatedRobot.status = "LOST";
+      }
 
       return updatedRobot;
     }, robot);
