@@ -14,7 +14,7 @@ async function loadInputData() {
 }
 
 /**
- * Convert text into array of lines
+ * Convert text into array of lines and remove empty ones
  * @param {String} rawData
  */
 function convertToArray(rawData) {
@@ -22,11 +22,11 @@ function convertToArray(rawData) {
 }
 
 /**
- * Validate input data. Dummy implementation.
+ * Validate input data.
  * @param {Array} arrData
  */
 function validateInputData(arrData) {
-  // simple check if input data contains odd number of elements
+  // simple check if input data contains odd number of lines
   if (arrData.length % 2 == 0) throw "Input data corrupted!";
 
   return arrData;
@@ -38,7 +38,6 @@ function validateInputData(arrData) {
  */
 function parsePositionLine(line) {
   const arr = line.trim().split(" ");
-
   return { position: [parseInt(arr[0]), parseInt(arr[1])], direction: arr[2] };
 }
 
@@ -68,20 +67,21 @@ function processInputData(arrData) {
       if (index == 0) {
         return { ...acc, grid: parseGridLine(currentLine) };
       } else {
+        // process robots data
         // which robot are we processing
         const robotIndex = Math.ceil(index / 2) - 1;
         const robot = acc.robots[robotIndex];
         let robots = acc.robots;
 
         if (robot) {
-          // reading instructions line and add to the current robot object
+          // read instructions line and add to the current robot object
           robots = robots.map((r, idx) =>
             idx == robotIndex
               ? { ...r, instructions: parseInstructionsLine(currentLine) }
               : r
           );
         } else {
-          // reading position line and adding new robot object
+          // read position line and add a new robot with status field
           robots = [
             ...robots,
             {
@@ -105,7 +105,7 @@ function validateCoords(coords, maxValue, msg = "Invalid input data!") {
 }
 
 /**
- * Validate processed data
+ * Validate processed data and check if all the values are within specified range
  */
 function validateProcessedData({ grid, robots }) {
   validateCoords(grid, config.MAX_COORDS_VALUE, "Invalid grid size!");
@@ -121,7 +121,7 @@ function validateProcessedData({ grid, robots }) {
 }
 
 /**
- * Load and process input data
+ * Load and process input data. Returns {grid, robots}.
  */
 async function getData() {
   return compose(
