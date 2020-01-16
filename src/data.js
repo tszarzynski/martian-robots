@@ -22,10 +22,10 @@ function convertToArray(rawData) {
 }
 
 /**
- * Validate input data
+ * Validate input data. Dummy implementation.
  * @param {Array} arrData
  */
-function validateInputDate(arrData) {
+function validateInputData(arrData) {
   // simple check if input data contains odd number of elements
   if (arrData.length % 2 == 0) throw "Input data corrupted!";
 
@@ -97,13 +97,37 @@ function processInputData(arrData) {
     { grid: {}, robots: [] }
   );
 }
+
+function validateCoords(coords, maxValue, msg = "Invalid input data!") {
+  if (coords.some(v => v > maxValue)) {
+    throw msg;
+  }
+}
+
+/**
+ * Validate processed data
+ */
+function validateProcessedData({ grid, robots }) {
+  validateCoords(grid, config.MAX_COORDS_VALUE, "Invalid grid size!");
+
+  robots.forEach(robot => {
+    if (robot.instructions.length > config.MAX_INSTRUCTIONS_LENGTH)
+      throw "Invalid instructions length!";
+
+    validateCoords(robot.position, config.MAX_COORDS_VALUE);
+  });
+
+  return { grid, robots };
+}
+
 /**
  * Load and process input data
  */
 async function getData() {
   return compose(
+    validateProcessedData,
     processInputData,
-    validateInputDate,
+    validateInputData,
     convertToArray,
     loadInputData
   )();
