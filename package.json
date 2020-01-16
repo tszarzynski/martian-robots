@@ -1,0 +1,19 @@
+{
+  "name": "martian-robots",
+  "version": "1.0.0",
+  "description": "Martian robots go for a walk",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tszarzynski/martian-robots.git"
+  },
+  "author": "tszarzynski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tszarzynski/martian-robots/issues"
+  },
+  "homepage": "https://github.com/tszarzynski/martian-robots#readme"
+}
