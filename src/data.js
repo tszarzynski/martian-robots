@@ -39,7 +39,7 @@ function validateInputDate(arrData) {
 function parsePositionLine(line) {
   const arr = line.trim().split(" ");
 
-  return { position: [arr[0], arr[1]], direction: arr[2] };
+  return { position: [parseInt(arr[0]), parseInt(arr[1])], direction: arr[2] };
 }
 
 /**
@@ -48,6 +48,13 @@ function parsePositionLine(line) {
  */
 function parseInstructionsLine(line) {
   return line.trim().split("");
+}
+
+function parseGridLine(line) {
+  return line
+    .trim()
+    .split(" ")
+    .map(Number);
 }
 
 /**
@@ -59,7 +66,7 @@ function processInputData(arrData) {
     (acc, currentLine, index) => {
       // get first line with grid coords
       if (index == 0) {
-        return { ...acc, grid: currentLine.trim().split(" ") };
+        return { ...acc, grid: parseGridLine(currentLine) };
       } else {
         // which robot are we processing
         const robotIndex = Math.ceil(index / 2) - 1;
