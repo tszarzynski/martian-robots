@@ -11,12 +11,13 @@ exports.getFromArray = (arr, i) => {
   return arr[((i % len) + len) % len];
 };
 
-exports.print = robots =>
-  robots.forEach(robot =>
+exports.print = (robots, withInstructions = false) =>
+  robots.forEach(robot => {
     console.log(
       robot.position[0],
       robot.position[1],
       robot.direction,
       robot.status
-    )
-  );
+    );
+    if (withInstructions) console.log(robot.instructions.join(""));
+  });

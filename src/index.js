@@ -13,8 +13,9 @@ const config = require("./config");
     const { grid, robots } = await getData();
     // print input data
     console.log(config.LOGO);
+    console.log("\nGRID SIZE:", grid.join(" "));
     console.log("\nINPUT:");
-    print(robots);
+    print(robots, true);
     // execute instructions
     const output = move(grid, robots);
     // print formatted output
