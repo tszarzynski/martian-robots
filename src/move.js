@@ -10,8 +10,8 @@ const moves = [
   [-1, 0]
 ];
 
-// Dictionary of all possible instructions
-const movesDict = {
+// Dictionary of all possible instructions. Allows further instruction addition.
+const instructionsDict = {
   R: robot => rotateRobot(robot, 1),
   L: robot => rotateRobot(robot, -1),
   F: robot => moveRobot(robot, 1)
@@ -56,7 +56,7 @@ function moveRobot(robot, numOfSteps) {
  * @param {String} instruction
  */
 function updateRobot(robot, instruction) {
-  return movesDict[instruction](robot);
+  return instructionsDict[instruction](robot);
 }
 
 // check if number is in range

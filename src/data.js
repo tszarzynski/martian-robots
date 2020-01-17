@@ -57,7 +57,7 @@ function parseGridLine(line) {
 }
 
 /**
- * Process input data
+ * Process input data in one go reading line by line
  * @param {Array} arrData
  */
 function processInputData(arrData) {
@@ -67,7 +67,7 @@ function processInputData(arrData) {
       if (index == 0) {
         return { ...acc, grid: parseGridLine(currentLine) };
       } else {
-        // process robots data
+        // remaining lines contain robots data
         // which robot are we processing
         const robotIndex = Math.ceil(index / 2) - 1;
         const robot = acc.robots[robotIndex];
@@ -108,12 +108,14 @@ function validateCoords(coords, maxValue, msg = "Invalid input data!") {
  * Validate processed data and check if all the values are within specified range
  */
 function validateProcessedData({ grid, robots }) {
+  //validate grid size
   validateCoords(grid, config.MAX_COORDS_VALUE, "Invalid grid size!");
 
   robots.forEach(robot => {
+    //validate instructions length
     if (robot.instructions.length > config.MAX_INSTRUCTIONS_LENGTH)
       throw "Invalid instructions length!";
-
+    //validate robot initial position
     validateCoords(robot.position, config.MAX_COORDS_VALUE);
   });
 

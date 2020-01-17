@@ -10,3 +10,13 @@ exports.getFromArray = (arr, i) => {
   const len = arr.length;
   return arr[((i % len) + len) % len];
 };
+
+exports.print = robots =>
+  robots.forEach(robot =>
+    console.log(
+      robot.position[0],
+      robot.position[1],
+      robot.direction,
+      robot.status
+    )
+  );
