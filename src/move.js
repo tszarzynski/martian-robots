@@ -1,3 +1,7 @@
+/**
+ * Moves logic
+ */
+
 const getFromArray = require("./utils").getFromArray;
 
 // Directions
@@ -85,7 +89,7 @@ const checkIfDeadlyMove = (robot, instruction) => {
 function move(grid, robots) {
   return robots.map(robot => {
     return robot.instructions.reduce((robot, instruction) => {
-      // if robot alreay lost ignore remaining instructions
+      // if robot already lost ignore remaining instructions
       if (robot.status == "LOST") return robot;
 
       // if scent detected ignore instruction

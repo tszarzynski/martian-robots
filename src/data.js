@@ -1,3 +1,7 @@
+/**
+ * Loading and processin the input data
+ */
+
 const fs = require("fs").promises;
 const path = require("path");
 const config = require("./config");

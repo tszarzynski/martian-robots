@@ -1,3 +1,7 @@
+/**
+ * Main entry file
+ */
+
 const { getData } = require("./data");
 const { move } = require("./move");
 const { print } = require("./utils");
@@ -7,6 +11,7 @@ const config = require("./config");
   try {
     // load data
     const { grid, robots } = await getData();
+    // print input data
     console.log(config.LOGO);
     console.log("\nINPUT:");
     print(robots);
