@@ -60,7 +60,10 @@ function moveRobot(robot, numOfSteps) {
  * @param {String} instruction
  */
 function updateRobot(robot, instruction) {
-  return instructionsDict[instruction](robot);
+  const instructionFunc = instructionsDict[instruction];
+
+  if (instructionFunc) return instructionFunc(robot);
+  else throw "Unsupported instruction!";
 }
 
 // check if number is in range
